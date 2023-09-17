@@ -7,7 +7,7 @@ const FooterCard = ({ heading, links }: footerCardDataInterface) => {
   return (
     <Stack spacing={"20px"}>
       <Text
-        h={"24px"}
+        h={{ base: "100%", lg: "24px" }}
         color={"quvor.dark"}
         fontSize="16px"
         fontWeight="700"

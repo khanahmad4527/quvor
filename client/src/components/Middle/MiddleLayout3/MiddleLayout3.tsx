@@ -30,7 +30,7 @@ const emailSchema = Yup.object().shape({
 });
 
 const MiddleLayout3 = () => {
-  /*********************** formik and yup validation to handle login **********************************/
+  /*********************** formik and yup validation to handle Newsletter **********************************/
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik<emailInterface>({
@@ -45,24 +45,24 @@ const MiddleLayout3 = () => {
     });
 
   return (
-    <Box h={"594px"} bg="quvor.pink">
+    <Box h={{ base: "100%", lg: "594px" }} bg="quvor.pink">
       <Stack
         direction={"column"}
-        width="1050px"
+        width={{ base: "100%", lg: "1050px" }}
         margin={"auto"}
-        height="574px"
-        padding="160px 0px 160px 0px"
+        height={{ base: "100%", lg: "574px" }}
+        padding={{ base: "50px 10px", lg: "160px 0px" }}
         spacing={"80px"}
       >
         <Stack
           direction={"column"}
-          width="692px"
+          width={{ base: "100%", lg: "692px" }}
+          height={{ base: "100%", lg: "116px" }}
           margin={"auto"}
-          height="116px"
           spacing={"10px"}
         >
           <Text
-            height="24px"
+            height={{ base: "100%", lg: "24px" }}
             fontSize="14px"
             fontWeight={700}
             lineHeight="24px"
@@ -73,7 +73,7 @@ const MiddleLayout3 = () => {
             Newsletter
           </Text>
           <Text
-            height="32px"
+            height={{ base: "100%", lg: "32px" }}
             fontSize="24px"
             fontWeight={700}
             lineHeight="32px"
@@ -84,9 +84,9 @@ const MiddleLayout3 = () => {
             Watch our Courses
           </Text>
           <Text
-            width={"469px"}
+            width={{ base: "100%", lg: "469px" }}
+            height={{ base: "100%", lg: "40px" }}
             margin={"auto"}
-            height="40px"
             fontSize="14px"
             fontWeight={400}
             lineHeight="20px"
@@ -104,11 +104,15 @@ const MiddleLayout3 = () => {
             isInvalid={touched.email && errors.email ? true : undefined}
             textAlign={"left"}
           >
-            <Box w="688px" margin={"auto"} h="58px">
+            <Box
+              w={{ base: "100%", md: "60%", lg: "688px" }}
+              h="58px"
+              margin={"auto"}
+            >
               <InputGroup
                 w="100%"
-                margin={"auto"}
                 h="100%"
+                margin={"auto"}
                 borderRadius={"5px"}
               >
                 <Input
