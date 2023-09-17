@@ -37,7 +37,7 @@ npm install
 3. Go to the server folder and do
 
 ```bash
-npm run dev
+npm run start
 ```
 
 4. Go to the client folder and do 
