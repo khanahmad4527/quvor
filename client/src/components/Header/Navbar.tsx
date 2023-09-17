@@ -23,7 +23,7 @@ import { UserAuth } from "@/context/AuthContext";
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const authContext = UserAuth();
-  console.log(authContext?.isAuth);
+
   return (
     <Box bg="quvor.pink" w={{ base: "100%", lg: "1440px" }} margin={"auto"}>
       <Flex

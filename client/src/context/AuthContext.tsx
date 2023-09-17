@@ -1,3 +1,4 @@
+"use client";
 import { useContext, createContext, useEffect, useState } from "react";
 import { userDataInterface } from "@/utils/types";
 import instance from "@/utils/axiosInstance";
@@ -17,8 +18,7 @@ export const AuthContextProvider = ({
 }: {
   children: JSX.Element;
 }) => {
-  const token = localStorage.getItem("quvorUserToken");
-  const [isAuth, setIsAuth] = useState<boolean>(token ? true : false);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
 
   const signup = async (userData: userDataInterface) => {
     try {
