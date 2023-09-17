@@ -9,6 +9,7 @@ import {
   FormControl,
   FormErrorMessage,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -30,6 +31,7 @@ const emailSchema = Yup.object().shape({
 });
 
 const MiddleLayout3 = () => {
+  const toast = useToast();
   /*********************** formik and yup validation to handle Newsletter **********************************/
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -39,7 +41,15 @@ const MiddleLayout3 = () => {
       onSubmit: async (values: emailInterface, action) => {
         const { email } = values;
 
-        console.log("submit");
+        toast({
+          title: "Subscribe Successful",
+          description: "Subscribe to newsletter successfully",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+          position: "top",
+        });
+
         action.resetForm();
       },
     });

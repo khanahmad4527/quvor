@@ -19,6 +19,8 @@ import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { UserAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 interface LoginFormValues {
   email: string;
@@ -51,6 +53,8 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const toast = useToast();
   const [isButton, setIsButton] = useState<boolean>(false);
+  const authContext = UserAuth();
+  const router = useRouter();
 
   /*********************** formik and yup validation to handle login **********************************/
 
@@ -60,14 +64,57 @@ export default function Login() {
       validationSchema: loginSchema,
       onSubmit: async (values: LoginFormValues, action) => {
         const { email, password } = values;
+        const response =
+          authContext && (await authContext.login(email, password));
 
         setIsButton(true);
 
-        setTimeout(() => {
-          console.log("login");
+        if (response.status === 200) {
+          toast({
+            title: "Login Successful",
+            description: "We've login you successfully",
+            status: "success",
+            duration: 1000,
+            isClosable: true,
+            position: "top",
+          });
           setIsButton(false);
-          action.resetForm();
-        }, 2000);
+          localStorage.setItem("quvorUserToken", response?.data?.token);
+          router.push("/secret");
+        } else if (response.status === 404) {
+          toast({
+            title: "No results found",
+            description: "Please sign up to create an account.",
+            status: "warning",
+            duration: 3000,
+            position: "top",
+            isClosable: true,
+          });
+          setIsButton(false);
+        } else if (response.status === 401) {
+          toast({
+            title: "Incorrect Password",
+            description: "Please enter correct password.",
+            status: "warning",
+            duration: 3000,
+            position: "top",
+            isClosable: true,
+          });
+          setIsButton(false);
+        } else {
+          toast({
+            title: "Server Error",
+            description:
+              "An unexpected error occurred on the server. Please try again later.",
+            status: "error",
+            duration: 3000,
+            position: "top",
+            isClosable: true,
+          });
+          setIsButton(false);
+        }
+
+        action.resetForm();
       },
     });
 

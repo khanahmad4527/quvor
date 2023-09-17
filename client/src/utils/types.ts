@@ -25,3 +25,10 @@ export interface footerCardDataInterface {
     link: string;
   }>;
 }
+
+export interface userDataInterface {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+}

@@ -18,12 +18,12 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { UserAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const isAuth = false;
-
+  const authContext = UserAuth();
+  console.log(authContext?.isAuth);
   return (
     <Box bg="quvor.pink" w={{ base: "100%", lg: "1440px" }} margin={"auto"}>
       <Flex
@@ -83,43 +83,54 @@ const Navbar = () => {
                     </Link>
                   </Stack>
 
-                  <Flex
-                    flexDirection={"column"}
-                    alignItems={"left"}
-                    height={"52px"}
-                    gap={"10px"}
-                    fontWeight={700}
-                    fontSize={"14px"}
-                    letterSpacing={"0.2px"}
-                    lineHeight={"22px"}
-                  >
-                    <Link
-                      href="/login"
-                      style={{
-                        color: "#96BB7C",
-                      }}
+                  {authContext?.isAuth && (
+                    <Button
+                      colorScheme="red"
+                      onClick={() => authContext?.logout()}
                     >
-                      Login
-                    </Link>
-                    <Flex
-                      alignItems={"center"}
-                      height="52px"
-                      padding="15px 25px 15px 25px"
-                      borderRadius="5px"
-                      gap="15px"
-                      bg="quvor.green"
-                      color={"white"}
-                      cursor={"pointer"}
-                    >
-                      <Link href="/signup">
-                        <Text>JOIN US</Text>
-                      </Link>
+                      Logout
+                    </Button>
+                  )}
 
-                      <Center w={"12px"} h={"10px"}>
-                        <AiOutlineArrowRight />
-                      </Center>
+                  {!authContext?.isAuth && (
+                    <Flex
+                      flexDirection={"column"}
+                      alignItems={"left"}
+                      height={"52px"}
+                      gap={"10px"}
+                      fontWeight={700}
+                      fontSize={"14px"}
+                      letterSpacing={"0.2px"}
+                      lineHeight={"22px"}
+                    >
+                      <Link
+                        href="/login"
+                        style={{
+                          color: "#96BB7C",
+                        }}
+                      >
+                        Login
+                      </Link>
+                      <Flex
+                        alignItems={"center"}
+                        height="52px"
+                        padding="15px 25px 15px 25px"
+                        borderRadius="5px"
+                        gap="15px"
+                        bg="quvor.green"
+                        color={"white"}
+                        cursor={"pointer"}
+                      >
+                        <Link href="/signup">
+                          <Text>JOIN US</Text>
+                        </Link>
+
+                        <Center w={"12px"} h={"10px"}>
+                          <AiOutlineArrowRight />
+                        </Center>
+                      </Flex>
                     </Flex>
-                  </Flex>
+                  )}
                 </Flex>
               </DrawerBody>
             </DrawerContent>
@@ -151,44 +162,53 @@ const Navbar = () => {
             <Link href={"/pricing"}>Pricing</Link>
             <Link href={"/contact"}>Contact</Link>
           </Flex>
-          <Flex
-            alignItems={"center"}
-            width={"300px"}
-            height={"52px"}
-            gap={"45px"}
-            fontWeight={700}
-            fontSize={"14px"}
-            letterSpacing={"0.2px"}
-            lineHeight={"22px"}
-          >
-            <Link
-              href="/login"
-              style={{
-                textAlign: "right",
-                color: "#96BB7C",
-              }}
-            >
-              Login
-            </Link>
+
+          {authContext?.isAuth && (
+            <Button colorScheme="red" onClick={() => authContext?.logout()}>
+              Logout
+            </Button>
+          )}
+
+          {!authContext?.isAuth && (
             <Flex
               alignItems={"center"}
-              height="52px"
-              padding="15px 25px 15px 25px"
-              borderRadius="5px"
-              gap="15px"
-              bg="quvor.green"
-              color={"white"}
-              cursor={"pointer"}
+              width={"300px"}
+              height={"52px"}
+              gap={"45px"}
+              fontWeight={700}
+              fontSize={"14px"}
+              letterSpacing={"0.2px"}
+              lineHeight={"22px"}
             >
-              <Link href="/signup">
-                <Text>JOIN US</Text>
+              <Link
+                href="/login"
+                style={{
+                  textAlign: "right",
+                  color: "#96BB7C",
+                }}
+              >
+                Login
               </Link>
+              <Flex
+                alignItems={"center"}
+                height="52px"
+                padding="15px 25px 15px 25px"
+                borderRadius="5px"
+                gap="15px"
+                bg="quvor.green"
+                color={"white"}
+                cursor={"pointer"}
+              >
+                <Link href="/signup">
+                  <Text>JOIN US</Text>
+                </Link>
 
-              <Center w={"12px"} h={"10px"}>
-                <AiOutlineArrowRight />
-              </Center>
+                <Center w={"12px"} h={"10px"}>
+                  <AiOutlineArrowRight />
+                </Center>
+              </Flex>
             </Flex>
-          </Flex>
+          )}
         </Flex>
       </Flex>
     </Box>

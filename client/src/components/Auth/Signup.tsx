@@ -19,6 +19,8 @@ import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useFormik } from "formik";
 import { signUpSchema } from "@/schemas/auth";
+import { UserAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 interface SignupFormValues {
   firstname: string;
@@ -40,6 +42,8 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isButton, setIsButton] = useState<boolean>(false);
   const toast = useToast();
+  const authContext = UserAuth();
+  const router = useRouter();
 
   /*********************** formik and yup validation to handle signup **********************************/
 
@@ -50,7 +54,7 @@ export default function Signup() {
       onSubmit: async (values: SignupFormValues, action) => {
         const { firstname, lastname, email, password } = values;
 
-        const user_data = {
+        const userData = {
           firstname,
           lastname,
           email,
@@ -59,11 +63,42 @@ export default function Signup() {
 
         setIsButton(true);
 
-        setTimeout(() => {
-          console.log("signup");
+        const response = authContext && (await authContext.signup(userData));
+        if (response.status === 201) {
+          toast({
+            title: "Account created successfully",
+            description: "Kindly login.",
+            status: "success",
+            duration: 3000,
+            position: "top",
+            isClosable: true,
+          });
           setIsButton(false);
-          action.resetForm();
-        }, 2000);
+          router.push("/login");
+        } else if (response.status === 409) {
+          toast({
+            title: "Email address already in use",
+            description: "Email address already associated with an account",
+            status: "warning",
+            duration: 3000,
+            position: "top",
+            isClosable: true,
+          });
+          setIsButton(false);
+        } else {
+          toast({
+            title: "Server Error",
+            description:
+              "An unexpected error occurred on the server. Please try again later.",
+            status: "error",
+            duration: 3000,
+            position: "top",
+            isClosable: true,
+          });
+          setIsButton(false);
+        }
+
+        action.resetForm();
       },
     });
 
