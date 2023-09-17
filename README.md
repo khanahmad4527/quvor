@@ -28,13 +28,7 @@ This is a simple website
 git clone https://github.com/khanahmad4527/quvor.git
 ```
 
-2. Go to the client folder and do 
- 
-```bash
-npm install
-```
-
-3. Go to the server folder and do
+2. Go to the server folder and do
 
 ```bash
 npm install
@@ -46,13 +40,19 @@ npm install
 npm run dev
 ```
 
-4. Go to the client folder and do
+4. Go to the client folder and do 
+ 
+```bash
+npm install
+```
+
+5. Go to the client folder and do
 
 ```bash
 npm run build
 ```
 
-5. Then do
+6. Then do
 
 ```bash
 npm run start
